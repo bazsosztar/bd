@@ -31,18 +31,20 @@ function logError($message) {
 function ensureSchema($db) {
     $sql = file_get_contents(__DIR__ . '/setup.sql');
     if ($sql === false) {
-        logError('Could not read setup.sql from ' . __DIR__ . '/setup.sql');
+        logError('Could not read setup.sql');
         return;
     }
 
-    if ($db->multi_query($sql)) {
-        do {
-            if ($result = $db->store_result()) {
-                $result->free();
-            }
-        } while ($db->more_results() && $db->next_result());
-    } else {
-        logError('Schema initialization failed: ' . $db->error);
+    // Split on semicolons and run each statement individually.
+    // Skip CREATE DATABASE / USE — shared hosting: DB is already selected.
+    foreach (explode(';', $sql) as $stmt) {
+        $stmt = trim($stmt);
+        if ($stmt === '' || $stmt[0] === '-') continue;
+        if (stripos($stmt, 'CREATE DATABASE') === 0) continue;
+        if (stripos($stmt, 'USE ') === 0) continue;
+        if (!$db->query($stmt)) {
+            logError('Schema stmt failed: ' . $db->error . ' | ' . substr($stmt, 0, 120));
+        }
     }
 }
 

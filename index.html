@@ -708,7 +708,8 @@ function addReviewToDOM(r){
 function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function getApiUrl(action){
   if (location.protocol === 'file:') {
-    return action === 'reviews' ? 'http://localhost:3001/api/reviews' : 'http://localhost:3001/api/event';
+    if (!action) return 'http://localhost:3001/api/event';
+    return 'http://localhost:3001/api/' + action;
   }
   const base = new URL('api.php', location.href).href;
   if (!action) return base;

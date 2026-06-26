@@ -118,6 +118,40 @@ app.get('/api/contacts', async (req, res) => {
   }
 });
 
+// ── GET /api/kpis ─────────────────────────────────────────
+app.get('/api/kpis', async (req, res) => {
+  try {
+    const db = await getPool();
+
+    async function scalar(sql) {
+      const [rows] = await db.execute(sql);
+      return rows[0] ? Number(Object.values(rows[0])[0]) : 0;
+    }
+
+    const summary = {
+      total_events:     await scalar("SELECT COUNT(*) FROM events"),
+      page_loads:       await scalar("SELECT COUNT(*) FROM events WHERE type='page_load'"),
+      unique_sessions:  await scalar("SELECT COUNT(DISTINCT JSON_UNQUOTE(JSON_EXTRACT(data,'$.sessionId'))) FROM events WHERE JSON_EXTRACT(data,'$.sessionId') IS NOT NULL"),
+      contacts:         await scalar("SELECT COUNT(*) FROM contacts"),
+      reviews:          await scalar("SELECT COUNT(*) FROM reviews"),
+      yes_clicks:       await scalar("SELECT COUNT(*) FROM events WHERE type='yes'"),
+      no_clicks:        await scalar("SELECT COUNT(*) FROM events WHERE type='no'"),
+      avg_stay_seconds: await scalar("SELECT COALESCE(ROUND(AVG(CAST(JSON_UNQUOTE(JSON_EXTRACT(data,'$.durationMs')) AS UNSIGNED))/1000),0) FROM events WHERE type='page_duration'"),
+    };
+
+    const [types] = await db.execute("SELECT type, COUNT(*) AS total FROM events GROUP BY type ORDER BY total DESC");
+
+    const [daily] = await db.execute("SELECT DATE(ts) AS day, COUNT(*) AS total, SUM(type='page_load') AS page_loads, SUM(type='contact') AS contacts, SUM(type='review') AS reviews FROM events GROUP BY DATE(ts) ORDER BY day DESC LIMIT 30");
+
+    const [recent] = await db.execute("SELECT id, type, data, ts, created_at FROM events ORDER BY id DESC LIMIT 100");
+    recent.forEach(r => { try { r.data = JSON.parse(r.data); } catch (_) {} });
+
+    res.json({ ok: true, summary, types, daily, recent });
+  } catch (err) {
+    res.status(500).json({ ok: false, error: err.message });
+  }
+});
+
 async function start() {
   try {
     await initializeDatabase();
@@ -131,6 +165,7 @@ async function start() {
     console.log('   POST /api/event     — log all interactions');
     console.log('   GET  /api/reviews   — list reviews');
     console.log('   GET  /api/contacts  — list contacts (who said Yes)');
+    console.log('   GET  /api/kpis      — analytics dashboard');
   });
 }
 
