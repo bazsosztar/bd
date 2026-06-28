@@ -80,19 +80,6 @@ body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--ink);min
 .btn-yes{flex:1;max-width:160px;padding:14px;border:none;border-radius:50px;background:var(--green);color:white;font-size:1rem;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(5,150,105,.3);transition:transform .1s;}
 .btn-no{flex:1;max-width:160px;padding:14px;border:none;border-radius:50px;background:var(--red);color:white;font-size:1rem;font-weight:700;cursor:pointer;transition:transform .1s;}
 .btn-yes:active,.btn-no:active{transform:scale(.96);}
-.contact-box{display:none;margin-top:20px;text-align:left;animation:fadeUp .35s ease;}
-.contact-box.show{display:block;}
-.contact-intro{font-size:.85rem;color:var(--soft);margin-bottom:14px;text-align:center;}
-.platform-grid{display:grid;gap:10px;}
-.platform-input{display:flex;flex-direction:column;gap:4px;}
-.platform-input label{font-size:.72rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--soft);}
-.platform-input input{border:1.5px solid #E5E7EB;border-radius:10px;padding:10px 12px;font-size:.88rem;font-family:inherit;background:var(--cream);transition:border-color .15s;}
-.platform-input input:focus{outline:none;border-color:var(--blue);}
-.platform-input.of label{text-decoration:line-through;color:#D1D5DB;}
-.platform-input.of input{opacity:.35;pointer-events:none;}
-.contact-submit{width:100%;margin-top:14px;background:var(--blue);color:white;border:none;border-radius:50px;padding:13px;font-size:.9rem;font-weight:600;cursor:pointer;}
-.contact-submitted{display:none;text-align:center;padding:14px;background:#F0FDF4;border-radius:12px;margin-top:14px;}
-.contact-submitted.show{display:block;animation:fadeUp .35s ease;}
 .no-popup{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px;}
 .no-popup.show{display:flex;}
 .no-popup-box{background:white;border-radius:20px;padding:28px 24px;max-width:320px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.25);animation:popIn .3s ease;}
@@ -100,23 +87,6 @@ body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--ink);min
 .no-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;margin-bottom:8px;}
 .no-desc{font-size:.88rem;color:var(--soft);line-height:1.55;margin-bottom:20px;}
 .no-close{background:var(--ink);color:white;border:none;border-radius:50px;padding:11px 28px;font-size:.9rem;font-weight:600;cursor:pointer;}
-.review-inner{padding:20px;}
-.star-row{display:flex;gap:6px;margin-bottom:14px;}
-.star{font-size:1.6rem;cursor:pointer;opacity:.3;transition:opacity .15s,transform .1s;}
-.star.lit{opacity:1;}
-.star:active{transform:scale(1.2);}
-.review-ta{width:100%;border:1.5px solid #E5E7EB;border-radius:10px;padding:12px;font-family:inherit;font-size:.88rem;resize:vertical;min-height:90px;background:var(--cream);transition:border-color .15s;}
-.review-ta:focus{outline:none;border-color:var(--blue);}
-.review-name{width:100%;margin-top:8px;border:1.5px solid #E5E7EB;border-radius:10px;padding:10px 12px;font-family:inherit;font-size:.88rem;background:var(--cream);transition:border-color .15s;}
-.review-name:focus{outline:none;border-color:var(--blue);}
-.review-submit{width:100%;margin-top:10px;background:var(--ink);color:white;border:none;border-radius:50px;padding:12px;font-size:.9rem;font-weight:600;cursor:pointer;}
-.reviews-list{margin-top:20px;display:grid;gap:10px;}
-.rev-card{background:var(--cream);border-radius:12px;padding:14px;}
-.rev-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
-.rev-name{font-weight:600;font-size:.85rem;}
-.rev-stars{font-size:.85rem;}
-.rev-text{font-size:.82rem;color:#4B5563;line-height:1.55;}
-.rev-date{font-size:.68rem;color:var(--soft);margin-top:4px;}
 .footer{text-align:center;padding-top:36px;font-size:.75rem;color:var(--soft);}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 @keyframes popIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
@@ -282,57 +252,20 @@ body.hu .en-only{display:none;}
             <button class="btn-yes" onclick="handleYes()"><span class="en-only">Yes! 🎉</span><span class="hu-only">Igen! 🎉</span></button>
             <button class="btn-no" onclick="handleNo()"><span class="en-only">No 😔</span><span class="hu-only">Nem 😔</span></button>
           </div>
-          <div class="contact-box" id="contact-box">
-            <p class="contact-intro en-only">Amazing! 🎉 Drop your handle on any platform you're comfortable with:</p>
-            <p class="contact-intro hu-only">Remek! 🎉 Add meg, hol érhetem el legkényelmesebben:</p>
-            <p style="font-size:.78rem;color:var(--soft);text-align:center;margin-bottom:14px;font-style:italic;" class="en-only">One is MORE than enough — just like me at Bumble 😄</p>
-            <p style="font-size:.78rem;color:var(--soft);text-align:center;margin-bottom:14px;font-style:italic;" class="hu-only">Egy is TÖBB mint elég — akárcsak én a Bumble-ön 😄</p>
-            <div style="display:grid;gap:10px;">
-              <div class="platform-input"><label>📸 Instagram</label><input type="text" id="c-insta" placeholder="@username"></div>
-              <div class="platform-input"><label>👤 Facebook</label><input type="text" id="c-fb" placeholder="Name or URL"></div>
-              <div class="platform-input"><label>📱 Phone</label><input type="tel" id="c-wa" placeholder="+36..."></div>
-              <div class="platform-input"><label>💬 Secure chat</label><input type="text" id="c-secure-chat" placeholder="Secure chat username"></div>
-              <div class="platform-input"><label>�🐝 Bumble</label><input type="text" id="c-bumble" placeholder="Profile name"></div>
-              <div class="platform-input of"><label>🔞 OnlyFans</label><input type="text" placeholder="(sorry I dont have an account :( )"></div>
-            </div>
-            <button class="contact-submit" onclick="submitContact()"><span class="en-only">Send it! 💌</span><span class="hu-only">Küldés! 💌</span></button>
-          </div>
-          <div class="contact-submitted" id="contact-submitted">
-            <div style="font-size:2rem;margin-bottom:8px">🎉</div>
-            <strong class="en-only">Got it! I'll be in touch soon.</strong><strong class="hu-only">Megvan! Hamarosan jelentkezem.</strong>
-            <div style="font-size:.82rem;color:var(--soft);margin-top:6px" class="en-only">Best decision you've made today.</div>
-            <div style="font-size:.82rem;color:var(--soft);margin-top:6px" class="hu-only">Ez volt a legjobb döntésed ma.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="section">
-    <div class="section-eyebrow en-only">Leave a review ⭐</div>
-    <div class="section-eyebrow hu-only">Értékelés ⭐</div>
-    <div class="card">
-      <button class="collapse-toggle" onclick="toggleCollapse(this)">
-        <span class="en-only">✍️ Rate Balázs</span><span class="hu-only">✍️ Értékeld Balázst</span>
-        <span class="arrow">▼</span>
-      </button>
-      <div class="collapse-body">
-        <div class="review-inner">
-          <div class="star-row" id="star-row">
-            <span class="star" onclick="setStar(1)">⭐</span>
-            <span class="star" onclick="setStar(2)">⭐</span>
-            <span class="star" onclick="setStar(3)">⭐</span>
-            <span class="star" onclick="setStar(4)">⭐</span>
-            <span class="star" onclick="setStar(5)">⭐</span>
-          </div>
-          <textarea class="review-ta" id="review-text" placeholder="Write your review..."></textarea>
-          <input class="review-name" id="review-name" type="text" placeholder="Your name (optional)">
-          <button class="review-submit" onclick="submitReview()"><span class="en-only">Submit review</span><span class="hu-only">Értékelés küldése</span></button>
-          <div class="reviews-list" id="reviews-list"></div>
         </div>
       </div>
     </div>
   </div>
   <div class="footer"><p>Made with 🤍 in Budapest &nbsp;·&nbsp; datebalazs.com &nbsp;·&nbsp; <a href="kpi.html" style="color:inherit">KPI dashboard</a></p></div>
+</div>
+<div class="no-popup" id="yes-popup" onclick="closeYesPopup(event)">
+  <div class="no-popup-box">
+    <div class="no-emoji">🎉</div>
+    <div class="no-title en-only">Congratulations!</div><div class="no-title hu-only">Gratulálok!</div>
+    <div class="no-desc en-only">Great choice! I'll definitely be in touch with you. 💙</div>
+    <div class="no-desc hu-only">Remek döntés! Biztosan felveszem veled a kapcsolatot. 💙</div>
+    <button class="no-close" onclick="closeYesPopup(null)"><span class="en-only">Can't wait! 🥰</span><span class="hu-only">Alig várom! 🥰</span></button>
+  </div>
 </div>
 <div class="no-popup" id="no-popup" onclick="closeNoPopup(event)">
   <div class="no-popup-box">
@@ -535,7 +468,6 @@ function showSpinResult(idx) {
   const el = document.getElementById('spin-result');
   el.style.background = idea.color + '66';
   el.classList.add('show');
-  saveEvent('spin', {segment: idea.title, lang});
 }
 
 // ── TRAVEL ───────────────────────────────────────────────────
@@ -579,7 +511,6 @@ function showTravelResult() {
   const el=document.getElementById('travel-result');
   el.innerHTML=`<div style="font-size:1.5rem;margin-bottom:6px">🌍</div><strong>${n} ${lang==='en'?'place'+(n>1?'s':''):'helyszín'}</strong><br><br>${msg}`;
   el.classList.add('show');
-  saveEvent('travel_select',{places:[...selected],lang});
 }
 initTravel();
 initGallery();
@@ -641,200 +572,15 @@ function showQuizResult(){
   document.getElementById('match-lbl').textContent=r.l;
   document.getElementById('match-desc').textContent=r.d;
   document.getElementById('q-result').classList.add('show');
-  saveEvent('quiz',{score:pct,lang});
 }
 initQuiz();
 
 // ── YES / NO ─────────────────────────────────────────────────
-function handleYes(){document.getElementById('contact-box').classList.add('show');document.getElementById('contact-submitted').classList.remove('show');saveEvent('yes',{lang});}
-function handleNo(){document.getElementById('no-popup').classList.add('show');saveEvent('no',{lang});}
+function handleYes(){document.getElementById('yes-popup').classList.add('show');}
+function handleNo(){document.getElementById('no-popup').classList.add('show');}
+function closeYesPopup(e){if(!e||e.target===document.getElementById('yes-popup'))document.getElementById('yes-popup').classList.remove('show');}
 function closeNoPopup(e){if(!e||e.target===document.getElementById('no-popup'))document.getElementById('no-popup').classList.remove('show');}
-function fieldVal(id){var el=document.getElementById(id);return el ? el.value.trim() : '';}
-function submitContact(){
-  var btn=document.querySelector('.contact-submit');
-  var data={
-    instagram:      fieldVal('c-insta'),
-    facebook:       fieldVal('c-fb'),
-    whatsapp:       fieldVal('c-wa'),
-    secure_chat:    fieldVal('c-secure-chat'),
-    bumble_profile: fieldVal('c-bumble'),
-    lang:           lang
-  };
-  if(!['instagram','facebook','whatsapp','secure_chat','bumble_profile'].some(function(k){return data[k];})){
-    alert(lang==='en'?'Please fill in at least one field':'Tölts ki legalább egy mezőt');
-    return;
-  }
-  if(btn) btn.disabled=true;
-  saveEvent('contact', data).then(function(resp){
-    if(!resp || resp.ok === false) throw new Error((resp && resp.error) || 'Submit failed');
-    document.getElementById('contact-box').classList.remove('show');
-    document.getElementById('contact-submitted').classList.add('show');
-  }).catch(function(err){
-    alert((lang==='en'?'Could not save it: ':'Nem sikerült menteni: ') + err.message);
-  }).finally(function(){
-    if(btn) btn.disabled=false;
-  });
-}
-
-// ── REVIEWS ──────────────────────────────────────────────────
-let starVal=0;
-function setStar(n){starVal=n;document.querySelectorAll('.star').forEach((s,i)=>s.classList.toggle('lit',i<n));}
-function submitReview(){
-  const text=document.getElementById('review-text').value.trim();
-  const name=document.getElementById('review-name').value.trim()||(lang==='en'?'Anonymous':'Névtelen');
-  if(!text){alert(lang==='en'?'Please write something 😊':'Írj valamit 😊');return;}
-  if(!starVal){alert(lang==='en'?'Please give a star rating ⭐':'Adj csillagos értékelést ⭐');return;}
-  const btn=document.querySelector('.review-submit');
-  const review={name,stars:starVal,text,lang,ts:new Date().toISOString()};
-  if(btn) btn.disabled=true;
-  saveEvent('review',review).then(function(resp){
-    if(!resp || resp.ok === false) throw new Error((resp && resp.error) || 'Submit failed');
-    document.getElementById('review-text').value='';
-    document.getElementById('review-name').value='';
-    setStar(0);
-    loadReviews();
-  }).catch(function(err){
-    alert((lang==='en'?'Could not save the review: ':'Nem sikerült menteni az értékelést: ') + err.message);
-  }).finally(function(){
-    if(btn) btn.disabled=false;
-  });
-}
-function addReviewToDOM(r){
-  const list=document.getElementById('reviews-list');
-  const el=document.createElement('div'); el.className='rev-card';
-  el.innerHTML=`<div class="rev-header"><span class="rev-name">${escHtml(r.name)}</span><span class="rev-stars">${'⭐'.repeat(r.stars)}</span></div><div class="rev-text">${escHtml(r.text)}</div><div class="rev-date">${new Date(r.ts).toLocaleDateString()}</div>`;
-  list.prepend(el);
-}
 function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-function getApiUrl(action){
-  if (location.protocol === 'file:') {
-    if (!action) return 'http://localhost:3001/api/event';
-    return 'http://localhost:3001/api/' + action;
-  }
-  const base = new URL('api.php', location.href).href;
-  if (!action) return base;
-  return base + (base.includes('?') ? '&' : '?') + 'action=' + action;
-}
-function loadReviews(){
-  const list=document.getElementById('reviews-list');
-  if (!list) return;
-  list.innerHTML='<div class="loading-tag">Loading reviews…</div>';
-  fetch(getApiUrl('reviews'))
-    .then(function(response){
-      return response.text().then(function(text){
-        var json = null;
-        try { json = text ? JSON.parse(text) : []; } catch (e) { json = []; }
-        if (!response.ok) throw new Error(json && json.error ? json.error : 'Could not load reviews');
-        return Array.isArray(json) ? json : [];
-      });
-    })
-    .then(function(rows){
-      list.innerHTML='';
-      rows.slice().reverse().forEach(addReviewToDOM);
-    })
-    .catch(function(err){
-      list.innerHTML='<div class="loading-tag">'+escHtml(err.message)+'</div>';
-    });
-}
-loadReviews();
-
-// ── API LOGGING / MYSQL VIA PHP ───────────────────────────────
-const API_ENDPOINT = getApiUrl();
-
-const sessionId = (function(){
-  try {
-    var key = 'db_session_id';
-    var v = sessionStorage.getItem(key);
-    if (!v) {
-      v = 's_' + Date.now() + '_' + Math.random().toString(36).slice(2);
-      sessionStorage.setItem(key, v);
-    }
-    return v;
-  } catch(e) {
-    return 's_' + Date.now();
-  }
-})();
-
-const pageStartedAt = Date.now();
-let durationAlreadySent = false;
-
-function apiErrorText(obj, fallback) {
-  if (!obj) return fallback || 'Unknown API error';
-  var msg = obj.error || fallback || 'Unknown API error';
-  if (obj.debug) msg += ' | DEBUG: ' + obj.debug;
-  return msg;
-}
-
-function saveEvent(type, data) {
-  data = Object.assign({
-    sessionId: sessionId,
-    path: location.pathname,
-    url: location.href,
-    referrer: document.referrer || '',
-    userAgent: navigator.userAgent,
-    viewport: { w: window.innerWidth, h: window.innerHeight }
-  }, data || {});
-
-  var payload = JSON.stringify({ type: type, data: data, ts: new Date().toISOString() });
-  return fetch(API_ENDPOINT, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json;charset=UTF-8' },
-    body: payload
-  }).then(function(response){
-    return response.text().then(function(text){
-      var json = null;
-      try { json = text ? JSON.parse(text) : null; } catch(e) {}
-
-      if (!response.ok) {
-        throw new Error(apiErrorText(json, response.status + ' ' + response.statusText + (text ? ' | BODY: ' + text.slice(0, 800) : '')));
-      }
-      if (!json) {
-        throw new Error('Invalid API response: ' + text.slice(0, 800));
-      }
-      if (json.ok === false) {
-        throw new Error(apiErrorText(json, 'API returned ok=false'));
-      }
-      return json;
-    });
-  }).catch(function(err){
-    console.error('API submit failed:', err);
-    return { ok: false, error: err.message };
-  });
-}
-
-function logPageExit(reason) {
-  if (durationAlreadySent) return;
-  durationAlreadySent = true;
-
-  var payload = {
-    type: 'page_duration',
-    data: {
-      sessionId: sessionId,
-      path: location.pathname,
-      url: location.href,
-      reason: reason || 'pagehide',
-      durationMs: Date.now() - pageStartedAt,
-      lang: lang
-    },
-    ts: new Date().toISOString()
-  };
-
-  try {
-    if (navigator.sendBeacon) {
-      var blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
-      navigator.sendBeacon(API_ENDPOINT, blob);
-      return;
-    }
-  } catch(e) {}
-
-  saveEvent('page_duration', payload.data);
-}
-
-saveEvent('page_load', { lang: lang, title: document.title });
-window.addEventListener('pagehide', function(){ logPageExit('pagehide'); });
-document.addEventListener('visibilitychange', function(){
-  if (document.visibilityState === 'hidden') logPageExit('hidden');
-});
 
 // Build gallery from IMGS
 function initGallery() {
