@@ -159,8 +159,8 @@ body.hu .en-only{display:none;}
     </div>
   </div>
   <div class="section">
-    <div class="section-eyebrow en-only">First date idea 🎡</div>
-    <div class="section-eyebrow hu-only">Első randevú ötletek 🎡</div>
+    <div class="section-eyebrow en-only">Next date idea 🎡</div>
+    <div class="section-eyebrow hu-only">Következő randevú ötletek 🎡</div>
     <div class="card">
       <button class="collapse-toggle" onclick="toggleCollapse(this)">
         <span class="en-only">🎰 Spin the wheel</span><span class="hu-only">🎰 Pörgess egyet</span>
@@ -168,7 +168,7 @@ body.hu .en-only{display:none;}
       </button>
       <div class="collapse-body">
         <div class="spinner-inner">
-          <p style="font-size:.82rem;color:var(--soft);margin-bottom:14px" class="en-only">Let fate decide our first date!</p>
+          <p style="font-size:.82rem;color:var(--soft);margin-bottom:14px" class="en-only">Let fate decide our next date!</p>
           <p style="font-size:.82rem;color:var(--soft);margin-bottom:14px" class="hu-only">Hadd döntse el a sors! (De ne csalj ;)</p>
           <div class="wheel-wrap">
             <div class="wheel-pointer"></div>
@@ -330,7 +330,7 @@ const IDEAS = {
   ],
   hu: [
     {icon:'🎨',title:'Múzeumi délután',desc:'Szívesen megmutatom a kedvenc helyeimet.',color:'#93C5FD'},
-    {icon:'⛵',title:'Vitorlázás',desc:'Ha ez első randinak kicsit bevállalós, választhatsz mást, de azért remélem eljutunk idáig is .',color:'#6EE7B7'},
+    {icon:'⛵',title:'Vitorlázás',desc:'Ha ez a következő randinak kicsit bevállalós, választhatsz mást, de azért remélem eljutunk idáig is .',color:'#6EE7B7'},
     {icon:'🧺',title:'Piknik',desc:'Laza, természetközeli élmény',color:'#FCA5A5'},
     {icon:'🌅',title:'Naplementés séta',desc:'Hosszú séta, jó kilátásal a végén.',color:'#FDE68A'},
     {icon:'🎭',title:'Színházi este',desc:'Ide is eljutunk, de csak egy kicsit később, úgyhogy pörgess még egyet! 🔄',color:'#C4B5FD'},
@@ -546,14 +546,14 @@ const QS={
   en:[
     {q:"Your ideal weekend is…",opts:["Exploring a new city","Hiking in nature","Lazy day at home","Road trip somewhere random"],s:[3,2,1,3]},
     {q:"Your travel packing style?",opts:["Carry-on only, always","One big suitcase, just in case","Whatever fits in my bag","I stress-pack the night before"],s:[3,2,3,2]},
-    {q:"Pick a first date vibe:",opts:["Museum + coffee","Dinner at a nice restaurant","Outdoor adventure","Drinks & deep conversation"],s:[3,2,3,2]},
+    {q:"Pick a next date vibe:",opts:["Museum + coffee","Dinner at a nice restaurant","Outdoor adventure","Drinks & deep conversation"],s:[3,2,3,2]},
     {q:"Dogs: must-have, nice-to-have, or hard pass?",opts:["Must-have, ASAP 🐕","Nice-to-have someday","Maybe eventually","Not really my thing"],s:[3,2,1,0]},
     {q:"Someone offers to fix your tech. Your reaction?",opts:["Love it, yes please!","It's honestly cute","I can handle it myself","Tech? What tech?"],s:[3,3,1,2]},
   ],
   hu:[
     {q:"Az ideális hétvégéd?",opts:["Új városban felfedezni","Túrázni","Lusta otthoni nap","Spontán road trip"],s:[3,2,1,3]},
     {q:"Hogyan pakolsz utazás előtt?",opts:["Kézitáska, mindig (csakis Ryanair-es kézipoggyász)","Egy nagy bőrönd","Ami belefér","Éjjel pánikosan bepakolok"],s:[3,1,3,2]},
-    {q:"Milyen az első randevú-hangulatod?",opts:["Múzeum + kávé","Vacsora egy jó helyen","Szabadtéri kaland","Koktél + mély beszélgetés"],s:[3,2,3,2]},
+    {q:"Milyen legyen a következő randevú hangulata?",opts:["Múzeum + kávé","Vacsora egy jó helyen","Szabadtéri kaland","Koktél + mély beszélgetés"],s:[3,2,3,2]},
     {q:"Kutya: muszáj, jó lenne, vagy inkább nem?",opts:["Muszáj, minél hamarabb 🐕","Jó lenne valamikor","Talán majd egyszer","Nem igazán az enyém"],s:[3,2,1,0]},
     {q:"Valaki megjavítja a tech-problémádat. Reakciód?",opts:["Imádnám!","Aranyos","Én is meg tudom","Tech? Milyen tech?"],s:[3,3,1,3]},
   ]
