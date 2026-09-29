@@ -241,7 +241,7 @@ body.hu .en-only{display:none;}
     <div class="section-eyebrow hu-only">A nagy kérdés 🤔</div>
     <div class="card">
       <button class="collapse-toggle open" onclick="toggleCollapse(this)">
-        <span class="en-only">💌 Would you date me?</span><span class="hu-only">💌 Randizni akarsz velem?</span>
+        <span class="en-only">💌 Do you still want to date me?</span><span class="hu-only">💌 Még mindig randizni szeretnél velem?</span>
         <span class="arrow">▼</span>
       </button>
       <div class="collapse-body open">
@@ -325,7 +325,7 @@ const IDEAS = {
     {icon:'⛵',title:'Sailing trip',desc:'Wind in hair, sun on water. I know a guy with a boat.',color:'#6EE7B7'},
     {icon:'🧺',title:'Picnic',desc:'Good food, a blanket, and nowhere else to be. Classic for a reason.',color:'#FCA5A5'},
     {icon:'🌅',title:'Sunset walk',desc:'A long walk ending somewhere with a great view and coffee.',color:'#FDE68A'},
-    {icon:'🎭',title:'Theatre night',desc:'Dress up, see something cultural, talk about it over wine.',color:'#C4B5FD'},
+    {icon:'🎭',title:'Theatre night',desc:"We'll get here too, just a little later, so spin once more! 🔄",color:'#C4B5FD'},
     {icon:'🧩',title:'Rakpart, Aperol, Danube',desc:"Just have a casual drink next to the Danube and see if we vibe.",color:'#F9A8D4'},
   ],
   hu: [
@@ -333,7 +333,7 @@ const IDEAS = {
     {icon:'⛵',title:'Vitorlázás',desc:'Ha ez első randinak kicsit bevállalós, választhatsz mást, de azért remélem eljutunk idáig is .',color:'#6EE7B7'},
     {icon:'🧺',title:'Piknik',desc:'Laza, természetközeli élmény',color:'#FCA5A5'},
     {icon:'🌅',title:'Naplementés séta',desc:'Hosszú séta, jó kilátásal a végén.',color:'#FDE68A'},
-    {icon:'🎭',title:'Színházi este',desc:'Azért remélem nem kell Szeptemberig várni az első randival :D.',color:'#C4B5FD'},
+    {icon:'🎭',title:'Színházi este',desc:'Ide is eljutunk, de csak egy kicsit később, úgyhogy pörgess még egyet! 🔄',color:'#C4B5FD'},
     {icon:'🧩',title:'Rakpart, Aperol, Danube',desc:"Csak egy Aperol a Dunaparton, és megnézzük, hogy megvan-e a szikra.",color:'#F9A8D4'},
   ]
 };
@@ -452,7 +452,41 @@ function showSpinResult(idx) {
   const el = document.getElementById('spin-result');
   el.style.background = idea.color + '66';
   el.classList.add('show');
+  notify('Spin result: ' + idea.title);
 }
+
+// ── EMAIL NOTIFY ─────────────────────────────────────────────
+// Every button press posts the current results to api.php, which emails them.
+let lastSpin = '';
+function snapshot() {
+  const qs = QS[lang];
+  const quiz = qans.map((a, i) => qs[i] ? qs[i].q + ' → ' + qs[i].opts[a] : '').filter(Boolean);
+  const pct = document.getElementById('match-pct');
+  return {
+    lang: lang,
+    spin: lastSpin,
+    travel: PLACES.filter(p => selected.has(p.key)).map(p => p[lang]),
+    quiz: quiz,
+    quizScore: document.getElementById('q-result').classList.contains('show') ? pct.textContent : '',
+  };
+}
+function notify(action) {
+  if (action.indexOf('Spin result: ') === 0) lastSpin = action.slice(13);
+  try {
+    fetch('api.php', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({type: 'button', data: Object.assign({action: action}, snapshot()), ts: new Date().toISOString()}),
+      keepalive: true,
+    }).catch(() => {});
+  } catch (e) {}
+}
+document.addEventListener('click', e => {
+  const btn = e.target.closest('button, .t-card');
+  if (!btn || btn.id === 'spin-btn') return; // spin is reported when the wheel stops
+  const label = (btn.querySelector('.' + lang + '-only, .lbl') || btn).textContent.trim();
+  setTimeout(() => notify('Pressed: ' + (label || btn.id || 'button')), 0); // after the click handler updates state
+});
 
 // ── TRAVEL ───────────────────────────────────────────────────
 const PLACES=[
