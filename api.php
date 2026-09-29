@@ -16,6 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 define('NOTIFY_TO', 'sztrokayb@gmail.com');
+// Must be a real mailbox in cPanel → Email Accounts: the host's outgoing spam filter rejects senders that don't exist.
+define('NOTIFY_FROM', 'website@datebalazs.com');
 
 function logError($message) {
     $logFile = __DIR__ . '/api_error.log';
@@ -37,8 +39,7 @@ function sendNotification($d, $ts) {
           . "IP: " . ($_SERVER['REMOTE_ADDR'] ?? '-') . "\n"
           . "Browser: " . ($_SERVER['HTTP_USER_AGENT'] ?? '-') . "\n";
 
-    $host = preg_replace('/^www\./', '', $_SERVER['HTTP_HOST'] ?? 'datebalazs.com');
-    $headers = "From: Date Balazs <noreply@$host>\r\n"
+    $headers = "From: Date Balazs <" . NOTIFY_FROM . ">\r\n"
              . "MIME-Version: 1.0\r\n"
              . "Content-Type: text/plain; charset=UTF-8\r\n";
     $subject = '=?UTF-8?B?' . base64_encode('💙 ' . $action) . '?=';
@@ -47,7 +48,7 @@ function sendNotification($d, $ts) {
         logError('mail() is disabled on this server');
         return 'mail() disabled on server';
     }
-    if (!mail(NOTIFY_TO, $subject, $text, $headers, '-fnoreply@' . $host)) {
+    if (!mail(NOTIFY_TO, $subject, $text, $headers, '-f' . NOTIFY_FROM)) {
         logError('mail() failed for action: ' . $action);
         return 'mail() returned false';
     }
